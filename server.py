@@ -24,6 +24,7 @@ def index():
         else:
             file_type = request.form['file_type']
             notched_top = request.form['notched_top'] == '1'
+            shelves = int(request.form['shelves'])
             box_name = _box_name(file_type)
             logger.debug('Creating box '+box_name+"...")
             # convert it to millimeters
@@ -40,18 +41,19 @@ def index():
             params['bounding_box'] = True if 'bounding_box' in request.form else False
             # now render it
             logger.info(request.remote_addr + " - " + box_name)
-            _render_box(box_name, file_type, params, notched_top)
+            _render_box(box_name, file_type, params, notched_top, shelves)
             return send_from_directory(BOX_TMP_DIR, box_name, as_attachment=True)
     else:
         return render_template("home.html", boxmaker_version=boxmaker.APP_VERSION)
 
 
-def _render_box(file_name, file_type, params, notched_top):
+def _render_box(file_name, file_type, params, notched_top, shelves):
     out_file_path = os.path.join(BOX_TMP_DIR, file_name)
     boxmaker.render(out_file_path,
                     params['width'], params['height'], params['depth'],
                     params['material_thickness'], params['cut_width'], params['notch_length'],
-                    params['bounding_box'], file_type, not notched_top
+                    params['bounding_box'], file_type, not notched_top,
+                    shelves
                     )
 
 
@@ -67,6 +69,7 @@ def _validate_box_params():
     errors += _numeric_errors(request.form['material_thickness'], 'Material thickness')
     errors += _numeric_errors(request.form['cut_width'], 'Cut width')
     errors += _numeric_errors(request.form['notch_length'], 'Notch length')
+    errors += _integer_errors(request.form['shelves'], 'Shelves')
     return errors
 
 
@@ -76,6 +79,13 @@ def _numeric_errors(string, name):
         return []
     except ValueError:
         return [name + " must be a number!"]
+
+def _integer_errors(string, name):
+    try:
+        int(string)
+        return []
+    except ValueError:
+        return [name + " must be an integer!"]
 
 if __name__ == "__main__":
     app.debug = False

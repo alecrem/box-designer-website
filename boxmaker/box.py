@@ -382,7 +382,8 @@ class Box:
 
     def _compute_dimensions(self):
         self._logger.debug(" tray: %s" % self._tray)
-        self._logger.debug(" drawers: %d" % self._drawers)
+        if self._drawers:
+            self._logger.debug(" drawers: %s" % self._drawers)
         if self._tray == False and self._drawers > 0:
             self._logger.error(" Make tray True to use drawers (else, behaviour is undefined)")
         # first enlarge the box to compensate for cut width
