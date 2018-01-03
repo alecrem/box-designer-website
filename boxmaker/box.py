@@ -138,22 +138,30 @@ class Box:
         drawer_notches = self._drawers - 1
         if drawer_notches > 0:
             for x in range(1, self._drawers):
-                self._draw_line(x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2)
-                self._draw_line(x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2,
-                                    x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
-                self._draw_line(x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
-                self._draw_line(x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                )
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                )
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                )
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                )
 
     def _draw_bottom(self):
         x0 = self._size['d'] + self._margin*2.0
@@ -173,22 +181,30 @@ class Box:
         drawer_notches = self._drawers - 1
         if drawer_notches > 0:
             for x in range(1, self._drawers):
-                self._draw_line(x0+self._size['w']/2 - 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['w']/2 + 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2)
-                self._draw_line(x0+self._size['w']/2 - 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2,
-                                    x0+self._size['w']/2 + 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
-                self._draw_line(x0+self._size['w']/2 - 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['w']/2 - 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
-                self._draw_line(x0+self._size['w']/2 + 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['w']/2 + 2*self._notch_length['w'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
+                self._draw_line(
+                    x0+self._size['w']/2 - 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['w']/2 + 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                )
+                self._draw_line(
+                    x0+self._size['w']/2 - 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['w']/2 + 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                )
+                self._draw_line(
+                    x0+self._size['w']/2 - 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['w']/2 - 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                )
+                self._draw_line(
+                    x0+self._size['w']/2 + 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['w']/2 + 2*self._notch_length['w'],
+                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                )
 
     def _draw_right(self):
         x0 = self._size['d'] + self._size['w'] + self._margin*3.0
@@ -210,22 +226,30 @@ class Box:
         drawer_notches = self._drawers - 1
         if drawer_notches > 0:
             for x in range(1, self._drawers):
-                self._draw_line(x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2)
-                self._draw_line(x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2,
-                                    x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
-                self._draw_line(x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['h']/2 - 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
-                self._draw_line(x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers - self._thickness/2,
-                                    x0+self._size['h']/2 + 2*self._notch_length['h'],
-                                    y0+self._size['d']*x/self._drawers + self._thickness/2)
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                )
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                )
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 - 2*self._notch_length['h'],
+                )
+                self._draw_line(
+                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['h']/2 + 2*self._notch_length['h'],
+                )
 
     def _draw_front(self):
         x0 = self._size['d'] + self._margin*2.0
