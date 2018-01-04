@@ -70,6 +70,7 @@ def _validate_box_params():
     errors += _numeric_errors(request.form['cut_width'], 'Cut width')
     errors += _numeric_errors(request.form['notch_length'], 'Notch length')
     errors += _integer_errors(request.form['shelves'], 'Shelves')
+    errors += _no_notched_top_and_shelves_at_the_same_time(request.form['notched_top'] == '1', int(request.form['shelves']))
     return errors
 
 
@@ -86,6 +87,12 @@ def _integer_errors(string, name):
         return []
     except ValueError:
         return [name + " must be an integer!"]
+
+def _no_notched_top_and_shelves_at_the_same_time(notched_top, shelves):
+    if notched_top == True and shelves > 0:
+        return ["Can't select \"Include Cover\" and \"Include Shelves\" at the same time!"]
+    else:
+        return []
 
 if __name__ == "__main__":
     app.debug = False
