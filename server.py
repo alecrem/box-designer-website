@@ -42,7 +42,7 @@ def index():
             # now render it
             logger.info(request.remote_addr + " - " + box_name)
             _render_box(box_name, file_type, params, notched_top, shelves)
-            return send_from_directory(BOX_TMP_DIR, box_name, as_attachment=True)
+            return render_template("home.html", download_file="https://www.studiokura.com/denshikousaku/box/tmp/boxes/" + box_name)
     else:
         return render_template("home.html", boxmaker_version=boxmaker.APP_VERSION)
 

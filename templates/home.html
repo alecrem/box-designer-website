@@ -154,5 +154,11 @@
 
 	</div>
 </div>
-
+{% if download_file %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <a class="btn btn-default" href="{{download_file}}">Last PDF file generated</a> (right click to download)
+  </div>
+</div>
+{% endif %}
 {% endblock %}
