@@ -6,7 +6,7 @@ WEBSITE_URL = "http://boxdesigner.connectionlab.org"
 
 
 def render(file_path, width, height, depth, thickness, cut_width, notch_length, draw_bounding_box=False,
-           file_type='pdf', tray=False, drawers=0):
+           file_type='pdf', tray=False, shelves=0):
     the_box = Box(file_path, width, height, depth, thickness, cut_width, notch_length, draw_bounding_box,
-                  file_type, tray, drawers)
+                  file_type, tray, shelves)
     the_box.render()

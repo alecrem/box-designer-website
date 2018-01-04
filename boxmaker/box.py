@@ -49,7 +49,7 @@ class Box:
     '''
 
     def __init__(self, file_path, width, height, depth, thickness, cut_width, notch_length, bounding_box,
-                 file_type, tray, drawers):
+                 file_type, tray, shelves):
         self._logger = logging.getLogger(__name__)
         self._file_path = file_path
         self._desired_size = {'w': float(width), 'h': float(height), 'd': float(depth)}
@@ -61,7 +61,7 @@ class Box:
         self._bounding_box = bounding_box
         self._doc_cls = DOC_CLASSES[file_type]
         self._tray = tray
-        self._drawers = drawers
+        self._shelves = shelves
 
     def render(self):
         # set things up
@@ -82,9 +82,9 @@ class Box:
         # 6. a W X D side (the top)
         if not self._tray:
             self._draw_top()
-        # 7. a W x H side (the drawer separator)
-        if self._drawers > 0:
-            self._draw_separator()
+        # 7. a W x H side (one shelf)
+        if self._shelves > 0:
+            self._draw_shelf()
         # and write out the file
         self._doc.save()
 
@@ -104,7 +104,7 @@ class Box:
                                  self._notch_length['d'], self._num_notches['d'],
                                  self._thickness, -1*self._cut_width/2.0, False, True)
 
-    def _draw_separator(self):
+    def _draw_shelf(self):
         x0 = self._size['d'] + self._margin * 2.0
         y0 = self._size['h'] * 2.0 + self._size['d'] + self._margin * 4.0
         # Draw top
@@ -243,31 +243,30 @@ class Box:
         self._draw_vertical_line(x0+self._size['d']-self._thickness, y0,
                                  self._notch_length['h'], self._num_notches['h'],
                                  self._thickness, -1*self._cut_width/2.0, False, False)
-        drawer_notches = self._drawers - 1
-        if drawer_notches > 0:
-            for x in range(1, self._drawers):
+        if self._shelves > 0:
+            for x in range(1, self._shelves + 1):
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
                 )
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
                 )
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
                 )
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
                 )
 
@@ -286,32 +285,31 @@ class Box:
         self._draw_vertical_line(x0+self._size['w']-self._thickness, y0,
                                  self._notch_length['d'], self._num_notches['d'],
                                  self._thickness, -1*self._cut_width/2.0, False, True)
-        drawer_notches = self._drawers - 1
-        if drawer_notches > 0:
-            for x in range(1, self._drawers):
+        if self._shelves > 0:
+            for x in range(1, self._shelves + 1):
                 self._draw_line(
                     x0+self._size['w']/2 - 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     x0+self._size['w']/2 + 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                 )
                 self._draw_line(
                     x0+self._size['w']/2 - 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     x0+self._size['w']/2 + 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                 )
                 self._draw_line(
                     x0+self._size['w']/2 - 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     x0+self._size['w']/2 - 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                 )
                 self._draw_line(
                     x0+self._size['w']/2 + 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers - self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     x0+self._size['w']/2 + 2*self._notch_length['w'],
-                    y0+self._size['d']*x/self._drawers + self._thickness/2,
+                    y0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                 )
 
     def _draw_right(self):
@@ -331,31 +329,30 @@ class Box:
         self._draw_vertical_line(x0+self._size['d']-self._thickness, y0,
                                  self._notch_length['h'], self._num_notches['h'],
                                  self._thickness, -1*self._cut_width/2.0, False, False)
-        drawer_notches = self._drawers - 1
-        if drawer_notches > 0:
-            for x in range(1, self._drawers):
+        if self._shelves > 0:
+            for x in range(1, self._shelves + 1):
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
                 )
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
                 )
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 - 2*self._notch_length['h'],
                 )
                 self._draw_line(
-                    x0+self._size['d']*x/self._drawers - self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) - self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
-                    x0+self._size['d']*x/self._drawers + self._thickness/2,
+                    x0+self._size['d']*x/(self._shelves+1) + self._thickness/2,
                     y0+self._size['h']/2 + 2*self._notch_length['h'],
                 )
 
@@ -382,10 +379,10 @@ class Box:
 
     def _compute_dimensions(self):
         self._logger.debug(" tray: %s" % self._tray)
-        if self._drawers:
-            self._logger.debug(" drawers: %s" % self._drawers)
-        if self._tray == False and self._drawers > 0:
-            self._logger.error(" Make tray True to use drawers (else, behaviour is undefined)")
+        if self._shelves:
+            self._logger.debug(" shelves: %s" % self._shelves)
+        if self._tray == False and self._shelves > 0:
+            self._logger.error(" Make tray True to use shelves (else, behaviour is undefined)")
         # first enlarge the box to compensate for cut width
         self._size = {'w': self._desired_size['w'] + self._cut_width,
                       'h': self._desired_size['h'] + self._cut_width,
@@ -412,7 +409,7 @@ class Box:
         self._logger.debug(" box size: (w=%.2f, h=%.2f, d=%.2f)" % (self._size['w'], self._size['h'],
                                                                     self._size['d']))
         # compute how big the document will be based on the layout of the pieces
-        if self._drawers > 0:
+        if self._shelves > 0:
             self._box_pieces_size = {
                 'w': self._size['d']*2.0 + self._size['w'],
                 'h': self._size['h']*3.0 + self._size['d']*1.0,
